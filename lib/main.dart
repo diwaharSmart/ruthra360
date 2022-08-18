@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ruthra360/mobile/auth/login.dart';
 import 'package:ruthra360/mobile/auth/register.dart';
 import 'package:ruthra360/mobile/chat/chat.dart';
+import 'package:ruthra360/mobile/group/createGroup.dart';
 import 'package:ruthra360/mobile/home/index.dart';
 import 'package:ruthra360/mobile/meeting/createMeeting.dart';
 import 'package:ruthra360/mobile/setting/account/main.dart';
@@ -42,6 +43,7 @@ void main() async{
       'linked_device':(context) =>  LinkedDevice(),
       'scan_device':(context) =>  QRViewExample(),
       'create_meeting':(context) =>  CreateMeeting(),
+      'create_group':(context) =>  CreateGroup(),
 
     },
   ));

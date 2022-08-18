@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:getwidget/components/toast/gf_toast.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:get/get.dart';
+import 'package:ruthra360/mobile/meeting/views.dart';
 
 class CreateMeeting extends StatefulWidget {
   const CreateMeeting({Key? key}) : super(key: key);
@@ -18,6 +14,8 @@ class _CreateMeetingState extends State<CreateMeeting> {
   List _selectedContacts = [];
   List _updatedContacts = [];
   TextEditingController controller= new TextEditingController();
+  dynamic meetingView = MeetingView();
+
   Future _loadContacts() async{
     List c = [];
     Box box = await Hive.openBox('contacts');
@@ -32,7 +30,6 @@ class _CreateMeetingState extends State<CreateMeeting> {
   createMeeting()
   async{
     Box user = await Hive.openBox('user');
-    Box box = await Hive.openBox('meetings');
     for(dynamic c in _selectedContacts){
       _updatedContacts.add(
         {
@@ -48,37 +45,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
       "recieved":true
     });
 
-    final response = await http.post(
-      Uri.parse('http://217.21.78.14:8000/mz_rm/room/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authrorization': 'token ${user.get("token")}'
-      },
-      body: jsonEncode(<dynamic, dynamic>{
-        "title":controller.text,
-        "participants": _updatedContacts,
-        "status":"upcoming",
-        "image":null,
-        "description":"",
-        "group":false,
-        "meeting":true,
-        "private":false,
-      }),
-    );
-    if(response.statusCode == 200){
-      // print(response.body);
-      GFToast.showToast("Meeting Created", context,toastPosition: GFToastPosition.BOTTOM);
-      dynamic data = jsonDecode(response.body);
-      box.put(data["room_id"], data);
-      Get.back();
-    }
-
-    else{
-      GFToast.showToast(response.statusCode.toString(), context);
-
-
-    }
-
+    meetingView.createmeeting(_selectedContacts,_updatedContacts,controller.text,context);
 
   }
 

@@ -156,13 +156,11 @@ class _StatusBarState extends State<StatusBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       child: Row(
         children: [
-          CreateStatus(),
+          // CreateStatus(),
           SizedBox(width: 15.0,),
           Expanded(child:
-
           ListView(
             scrollDirection: Axis.horizontal,
             children:  [
@@ -173,16 +171,11 @@ class _StatusBarState extends State<StatusBar> {
                 },
                 child: UserStatus(id:"1",name: "Merzol",),
               ),
-    
-
             ],
           )
           )
         ],
-
       ),
     );
-
   }
-
 }

@@ -86,14 +86,14 @@ class _MeetingHistoryState extends State<MeetingHistory> {
         leading: IconButton(onPressed: (){Navigator.pop(context);},icon: Icon(Icons.arrow_back_ios,color: Colors.black),),
         title: Text(widget.meeting["title"]??"",style: TextStyle(color: Colors.black),),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.download_rounded,color: Colors.black)),
+          IconButton(onPressed: (){}, icon: Icon(Icons.download_rounded,color: Colors.grey)),
           IconButton(onPressed: (){
             // print(widget.meeting["participants"]);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Participants(participants:widget.meeting["room_user"])),
             );
-          }, icon: Icon(Icons.group,color: Colors.black)),
+          }, icon: Icon(Icons.group,color: Colors.grey)),
         ],
       ),
 

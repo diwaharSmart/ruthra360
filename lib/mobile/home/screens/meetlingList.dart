@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ruthra360/mobile/meeting/meetingHistory.dart';
+import 'package:ruthra360/mobile/meeting/views.dart';
 import 'package:ruthra360/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -21,12 +22,14 @@ class _MeetingListState extends State<MeetingList> {
   dynamic _selectedIndex =[];
   dynamic item = [];
   dynamic selectedItem = [];
+  dynamic meetingview = MeetingView();
 
   @override
 
   Future _loadMeetings() async{
     Box box = await Hive.openBox('meetings');
     setState(() => item = box.values.toList());
+    print(item);
   }
 
   fetchData()async{
@@ -45,6 +48,7 @@ class _MeetingListState extends State<MeetingList> {
       dynamic data = jsonDecode(response.body);
       for(dynamic a in data) {
         box.put(a["room_id"], a);
+
       }
       setState(() => item = box.values.toList());
     }
@@ -119,15 +123,15 @@ class _MeetingListState extends State<MeetingList> {
                     return InkWell(
                       onTap: (){
                         if(_menu == true){
-                          if(selectedItem.contains(item[index]["id"])){
+                          if(selectedItem.contains(item[index]["room_id"])){
                             setState(() {
-                              selectedItem.remove(item[index]["id"]);
+                              selectedItem.remove(item[index]["room_id"]);
                             });
 
                           }
                           else {
                             setState(() {
-                              selectedItem.add(item[index]["id"]);
+                              selectedItem.add(item[index]["room_id"]);
                             });
                           }
                         }
@@ -145,12 +149,12 @@ class _MeetingListState extends State<MeetingList> {
 
                           }
                           else{
-                            selectedItem.add(item[index]["id"]);
+                            selectedItem.add(item[index]["room_id"]);
                             _menu = true;
                           }
                         });
                       },child: Container(
-                        color: (selectedItem.contains(item[index]["id"]))?Colors.grey[300]:Colors.transparent,
+                        color: (selectedItem.contains(item[index]["room_id"]))?Colors.grey[300]:Colors.transparent,
                         child: MeetingItem(title: item[index]["title"],participants: item[index]["room_user"],status: item[index]["status"],)
                     ),);
                   },
@@ -195,13 +199,14 @@ class _MeetingListState extends State<MeetingList> {
 
             for(int i=0;i<selectedItem.length;i++){
               setState(() {
-                item.removeWhere((item) => item["id"] == selectedItem[i]);
-
-
+                item.removeWhere((item) => item["room_id"] == selectedItem[i]);
+                meetingview.deletemeeting(selectedItem[i]);
               });
             }
+
             setState(() {
               selectedItem.clear();
+
             });
 
           }, icon: Icon(Icons.delete,color: Colors.white60,)),
