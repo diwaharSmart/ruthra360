@@ -351,7 +351,8 @@ class _EndIndicatorState extends State<EndIndicator>
 
 
 class CallLogItem extends StatefulWidget {
-  const CallLogItem({Key? key}) : super(key: key);
+  final item;
+  const CallLogItem(this.item,{Key? key}) : super(key: key);
 
   @override
   _CallLogItemState createState() => _CallLogItemState();
@@ -389,8 +390,8 @@ class _CallLogItemState extends State<CallLogItem> {
                 Row(
 
 
-                  children: const [
-                    Expanded(child: Text("My Colik",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)),
+                  children: [
+                    Expanded(child: Text(widget.item["contact"]["first_name"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)),
 
                   ],),
                 Row(
@@ -402,13 +403,13 @@ class _CallLogItemState extends State<CallLogItem> {
 
 
                     Expanded(child: Row(
-
                       children:  [
-                        Icon(Icons.call_missed,color: Colors.red,),
+                        Icon(Icons.call_missed_outgoing,color: Colors.green,),
                         SizedBox(width: 5.0,),
-                        Text("23.01 PM",style: TextStyle(fontSize: 13),)
+                        Text(widget.item["timestamp"],style: TextStyle(fontSize: 13),)
                       ],
-                    )),
+                     )
+                    ),
 
 
                   ],)
@@ -416,10 +417,15 @@ class _CallLogItemState extends State<CallLogItem> {
             ),
           )
           ),
+          (widget.item["call_type"]=="audio")?
           Container(
               width: 40.0,
             child: Center(child: Icon(Icons.call,color: Colors.blueGrey,),),
-              )
+              ):
+          Container(
+            width: 40.0,
+            child: Center(child: Icon(Icons.videocam,color: Colors.blueGrey,),),
+          )
         ],
       ),
 

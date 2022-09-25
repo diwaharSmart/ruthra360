@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ruthra360/mobile/call/views.dart';
 import 'package:ruthra360/mobile/contact/contact_list.dart';
 import 'package:ruthra360/widgets.dart';
+import 'package:hive/hive.dart';
 
 class CallList extends StatefulWidget {
   const CallList({Key? key}) : super(key: key);
@@ -13,8 +15,21 @@ class _CallListState extends State<CallList> {
   @override
   bool _menu = false;
   dynamic _selectedIndex =[];
-  dynamic item = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}];
+  dynamic item = [];
   dynamic selectedItem = [];
+  dynamic callView = CallView();
+
+
+  getLogs() async{
+    Box box = await Hive.openBox('calllogs');
+    setState(() => item = box.values.toList());
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    getLogs();
+  }
 
 
   Widget build(BuildContext context) {
@@ -34,6 +49,7 @@ class _CallListState extends State<CallList> {
                     color: Colors.grey[100],
                     child: Column(
                       children: [
+                        (item.length==0)?Expanded(child: Center(child: Text("Empty Call Logs"),),):
                         Expanded(child: ListView.builder(
 
                           itemCount: item.length,
@@ -41,34 +57,41 @@ class _CallListState extends State<CallList> {
                             return InkWell(
                               onTap: (){
                                 if(_menu == true){
-                                  if(selectedItem.contains(item[index]["id"])){
+                                  if(selectedItem.contains(item[index]["call_id"])){
                                     setState(() {
-                                      selectedItem.remove(item[index]["id"]);
+                                      selectedItem.remove(item[index]["call_id"]);
+                                      // callView.deletelog(item[index]["call_id"]);
                                     });
 
                                   }
                                   else {
                                     setState(() {
-                                      selectedItem.add(item[index]["id"]);
+                                      selectedItem.add(item[index]["call_id"]);
                                     });
                                   }
                                 }
-
+                                else{
+                                  // Navigator.push(
+                                  //   context,
+                                  //   // MaterialPageRoute(builder: (context) => MeetingHistory(meeting:item[index])),
+                                  // );
+                                }
                               },
                               onLongPress: (){
-                              setState(() {
+                                setState(() {
 
-                                if(_menu ==true){
+                                  if(_menu ==true){
 
-                                }
-                                else{
-                                  selectedItem.add(item[index]["id"]);
-                                  _menu = true;
-                                }
-                              });
-                            },child: Container(
-                                color: (selectedItem.contains(item[index]["id"]))?Colors.grey[300]:Colors.transparent,
-                                child: CallLogItem()),);
+                                  }
+                                  else{
+                                    selectedItem.add(item[index]["call_id"]);
+                                    _menu = true;
+                                  }
+                                });
+                              },child: Container(
+                                color: (selectedItem.contains(item[index]["call_id"]))?Colors.grey[300]:Colors.transparent,
+                                child: CallLogItem(item[index])
+                            ),);
                           },
 
 
@@ -116,10 +139,11 @@ class _CallListState extends State<CallList> {
 
             for(int i=0;i<selectedItem.length;i++){
               setState(() {
-                item.removeWhere((item) => item["id"] == selectedItem[i]);
+                item.removeWhere((item) => item["call_id"] == selectedItem[i]);
 
 
               });
+              callView.deletelog(item["call_id"]);
             }
             setState(() {
               selectedItem.clear();

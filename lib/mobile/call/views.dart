@@ -21,22 +21,28 @@ class CallView{
     box.delete(log_id);
   }
 
-  Future createcall(_selectedContacts,_updatedContacts,title,context)
+  Future createcall(contact_id,context,call_type)
   async{
     Box user = await Hive.openBox('user');
-    Box box = await Hive.openBox('meetings');
+    Box contacts = await Hive.openBox('contacts');
+    Box box = await Hive.openBox('calllogs');
 
-    final response = await http.post(
-      Uri.parse('http://217.21.78.14:8000/mz_cl/call/'),
+    final response = await http.get(
+      Uri.parse('http://217.21.78.14:8000/mz_cl/create/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authrorization': 'token ${user.get("token")}'
       },
     );
     if(response.statusCode == 200){
-      GFToast.showToast("Call Created", context,toastPosition: GFToastPosition.BOTTOM);
+
       dynamic data = jsonDecode(response.body);
+
+      data["contact"] = contacts.get(contact_id);
+      data["call_type"] = call_type;
+
       box.put(data["call_id"], data);
+      GFToast.showToast("Call Created", context,toastPosition: GFToastPosition.BOTTOM);
       Get.back();
     }
 

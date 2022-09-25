@@ -29,7 +29,7 @@ class _MeetingListState extends State<MeetingList> {
   Future _loadMeetings() async{
     Box box = await Hive.openBox('meetings');
     setState(() => item = box.values.toList());
-    print(item);
+    // print(item);
   }
 
   fetchData()async{

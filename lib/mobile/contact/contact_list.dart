@@ -3,6 +3,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:getwidget/components/toast/gf_toast.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:ruthra360/mobile/call/views.dart';
 import 'package:ruthra360/mobile/chat/chat.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ class _FlutterContactsExampleState extends State<FlutterContactsExample> {
   bool _permissionDenied = false;
   bool isSearching=false;
   TextEditingController searchController = new TextEditingController();
-
+  dynamic callView = CallView();
 
   @override
   void initState() {
@@ -210,9 +211,14 @@ class _FlutterContactsExampleState extends State<FlutterContactsExample> {
                           ],
                         ),
                       ),
-                      IconButton(onPressed: () {},
+                      IconButton(onPressed: () {
+
+                        callView.createcall(_contacts![i]["user_id"],context,"audio");
+                      },
                           icon: Icon(Icons.call, color: Colors.blueGrey,)),
-                      IconButton(onPressed: () {},
+                      IconButton(onPressed: () {
+                        callView.createcall(_contacts![i]["user_id"],context,"video");
+                      },
                           icon: Icon(
                             Icons.video_call, color: Colors.blueGrey,)),
 
