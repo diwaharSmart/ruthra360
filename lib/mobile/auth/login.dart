@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:hive/hive.dart';
-import 'package:ruthra360/mobile/auth/register.dart';
-import 'package:ruthra360/mobile/home/index.dart';
+
 import 'package:getwidget/getwidget.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -36,7 +35,7 @@ class _LoginState extends State<Login> {
   dynamic currentState = MobileVerificationState.SHOW_MOBILE_FROM_STATE;
   late String _verificationId ;
   bool is_loading = false;
-  final SmsAutoFill _autoFill = SmsAutoFill();
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final color = const Color(0xff43469E);
   String selection ='+91';
@@ -235,7 +234,7 @@ class _LoginState extends State<Login> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                   BorderRadius.circular(30)),
-                              child: RaisedButton(
+                              child: MaterialButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/complete');
                                 },
@@ -320,7 +319,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(30)),
             height: 50,
             buttonColor: color,
-            child: RaisedButton(
+            child: MaterialButton(
                 onPressed: () async {
                   setState(() {
                     is_loading = true;
@@ -415,7 +414,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(30)),
             height: 50,
             buttonColor: color,
-            child: RaisedButton(
+            child: MaterialButton(
                 onPressed: () async{
                   setState(() {
                     is_loading = true;
@@ -428,7 +427,7 @@ class _LoginState extends State<Login> {
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins',
                       color: Colors.white),
-                )),
+                ))
           )
 
         ],

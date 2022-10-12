@@ -137,7 +137,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
               child: Row(
                 children: [
                   Expanded(child: Container()),
-                  RaisedButton(
+                  MaterialButton(
                     color: Colors.redAccent,
                     onPressed: (){
                       createMeeting();

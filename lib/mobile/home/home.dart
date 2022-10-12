@@ -161,12 +161,13 @@ class _HomeState extends State<Home> {
     );
   }
   void _showSnackBar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          duration: const Duration(milliseconds: 1000),
-        )
-    );
+
+    // Scaffold.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(message),
+    //       duration: const Duration(milliseconds: 1000),
+    //     )
+    // );
   }
 }
 

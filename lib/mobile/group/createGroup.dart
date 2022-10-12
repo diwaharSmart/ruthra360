@@ -140,7 +140,7 @@ class _CreateGroupState extends State<CreateGroup> {
               child: Row(
                 children: [
                   Expanded(child: Container()),
-                  RaisedButton(
+                  MaterialButton(
                     color: Colors.redAccent,
                     onPressed: (){
                       createMeeting();

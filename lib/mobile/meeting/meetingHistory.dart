@@ -114,7 +114,7 @@ class _MeetingHistoryState extends State<MeetingHistory> {
               ],
             ),
 
-            (widget.meeting["status"]=="live")?RaisedButton(color: Colors.blueAccent,onPressed: (){},child: Text("Join Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
+            (widget.meeting["status"]=="live")?MaterialButton(color: Colors.blueAccent,onPressed: (){},child: Text("Join Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
           ],
         ),
 
@@ -133,13 +133,13 @@ class _MeetingHistoryState extends State<MeetingHistory> {
                   ],
                 ):SizedBox(),
 
-                (widget.meeting["status"]=="live" || widget.meeting["status"]=="upcoming")? RaisedButton(color: Colors.red,onPressed: (){endMeeting();},child: Text("End Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
+                (widget.meeting["status"]=="live" || widget.meeting["status"]=="upcoming")? MaterialButton(color: Colors.red,onPressed: (){endMeeting();},child: Text("End Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
                 SizedBox(width: 10,),
 
-                (widget.meeting["status"]!="live" && widget.meeting["status"]!="end")?RaisedButton(color: Colors.green,onPressed: (){startMeeting();},child: Text("Start Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
+                (widget.meeting["status"]!="live" && widget.meeting["status"]!="end")?MaterialButton(color: Colors.green,onPressed: (){startMeeting();},child: Text("Start Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
                 SizedBox(width: 10,),
 
-                (widget.meeting["status"]=="live")?RaisedButton(color: Colors.blueAccent,onPressed: (){joinMeeting();},child: Text("Join Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
+                (widget.meeting["status"]=="live")?MaterialButton(color: Colors.blueAccent,onPressed: (){joinMeeting();},child: Text("Join Meeting",style: TextStyle(color: Colors.white),),):SizedBox(),
 
 
               ],

@@ -40,8 +40,8 @@ class _ChatScreenMainState extends State<ChatScreenMain> {
             title: Text('Select language'),
             onValuePicked: (Language language) => setState(() {
               _selectedLaunguage = language;
-              print(_selectedLaunguage.name);
-              print(_selectedLaunguage.isoCode);
+              // print(_selectedLaunguage.name);
+              // print(_selectedLaunguage.isoCode);
             }),
             itemBuilder: _buildDialogItem)),
   );
