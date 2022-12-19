@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:extended_text_field/extended_text_field.dart';
+import 'package:path/path.dart';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'package:hive/hive.dart';
 
 class ChatController extends StatefulWidget {
   //  ChatController({Key? key}) : super(key: key);
@@ -15,7 +20,31 @@ class ChatController extends StatefulWidget {
 class _ChatControllerState extends State<ChatController> {
   bool isTyping = false;
   bool attachment = false;
+
   final _textController = TextEditingController();
+
+  Future getAndUploadFile() async {
+    FilePickerResult? file = await FilePicker.platform.pickFiles();
+    try {
+      Box box = await Hive.openBox('user');
+      String token = box.get('token');
+      print('token : $token');
+
+      // Use the below formdata to send to api
+      FormData formData = new FormData.fromMap({
+        "type": "document",
+        "file": await MultipartFile.fromFile(file!.files.single.path!,
+            filename: basename(file!.files.single.path!))
+      });
+    } catch (e) {
+      print("Error opening the box");
+    }
+
+    // setState(() {
+    //   _file = File(file!.files.single.path!);
+    //   // print(basename(_file!.path));
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +130,17 @@ class _ChatControllerState extends State<ChatController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
+                                onTap: () {
+                                  getAndUploadFile();
+                                },
                                 child: CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.yellow[200],
-                              child: Icon(
-                                Icons.file_present,
-                                color: Colors.white,
-                              ),
-                            )),
+                                  radius: 30,
+                                  backgroundColor: Colors.yellow[200],
+                                  child: Icon(
+                                    Icons.file_present,
+                                    color: Colors.white,
+                                  ),
+                                )),
                             Text(
                               "Document",
                               style:
