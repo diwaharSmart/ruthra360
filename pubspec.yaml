@@ -67,6 +67,9 @@ dependencies:
   extended_text_field: ^10.1.0
   extended_image_library:
   get: ^4.6.5
+  dio: ^4.0.6
+  file_picker: ^5.2.4
+  path: ^1.8.2
 
 
 
@@ -82,7 +85,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   camera:
-  path:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
